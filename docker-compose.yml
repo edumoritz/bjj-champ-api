@@ -4,9 +4,9 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: bjj-champ
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     ports:
       - "5433:5432"
     volumes:
@@ -15,7 +15,7 @@ services:
       - bjj-network
 
   app:
-    network_mode: host
+    # network_mode: host
     build: 
       context: .
       dockerfile: Dockerfile
@@ -25,13 +25,13 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: localhost
-      DB_PORT: 5433
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: bjj-champ
-    # networks:
-    #   - bjj-network
+      DB_HOST: 'db' # ${DB_HOST}
+      DB_PORT: 5432 # ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+    networks:
+      - bjj-network
 
 networks:
   bjj-network:
