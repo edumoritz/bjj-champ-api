@@ -32,6 +32,15 @@ services:
       DB_DATABASE: ${DB_DATABASE}
     networks:
       - bjj-network
+  
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+    restart: always
 
 networks:
   bjj-network:
@@ -39,3 +48,4 @@ networks:
 
 volumes:
   postgres_data:
+  jenkins_data:
